@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}My Cases - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>My Cases</h1>
+    <a href="{{ url_for('new_case') }}" class="btn btn-primary">New Case</a>
+</div>
+
+{% if cases %}
+    <div class="cases-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Number</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for case in cases %}
+                <tr>
+                    <td><strong>{{ case.case_number }}</strong></td>
+                    <td>{{ case.case_type }}</td>
+                    <td><span class="status status-{{ case.status }}">{{ case.status }}</span></td>
+                    <td><span class="priority priority-{{ case.priority }}">{{ case.priority }}</span></td>
+                    <td>{{ case.created_at.strftime('%b %d, %Y') }}</td>
+                    <td>
+                        <a href="{{ url_for('view_case', case_id=case.id) }}" class="btn btn-sm">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="empty-state">
+        <p>You don't have any cases yet.</p>
+        <a href="{{ url_for('new_case') }}" class="btn btn-primary">Create Your First Case</a>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Create an Account</h2>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.first_name.label }}
+                {{ form.first_name(class="form-control") }}
+                {% if form.first_name.errors %}
+                    <span class="error">{{ form.first_name.errors[0] }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.last_name.label }}
+                {{ form.last_name(class="form-control") }}
+                {% if form.last_name.errors %}
+                    <span class="error">{{ form.last_name.errors[0] }}</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(class="form-control") }}
+            {% if form.email.errors %}
+                <span class="error">{{ form.email.errors[0] }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.phone.label }}
+            {{ form.phone(class="form-control") }}
+            {% if form.phone.errors %}
+                <span class="error">{{ form.phone.errors[0] }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.address.label }}
+            {{ form.address(class="form-control") }}
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.city.label }}
+                {{ form.city(class="form-control") }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.state.label }}
+                {{ form.state(class="form-control") }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.zip_code.label }}
+                {{ form.zip_code(class="form-control") }}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(class="form-control") }}
+            {% if form.password.errors %}
+                <span class="error">{{ form.password.errors[0] }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.password2.label }}
+            {{ form.password2(class="form-control") }}
+            {% if form.password2.errors %}
+                <span class="error">{{ form.password2.errors[0] }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    
+    <p class="form-footer">
+        Already have an account? <a href="{{ url_for('login') }}">Sign in here</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Legal Advocacy & Authorized Representative Services</h1>
+    <p class="lead">Free Legal Assistance for Low-Income Families</p>
+    <p>We provide self-help resources for court documents and authorized representative services to help you navigate the legal system.</p>
+    
+    {% if not current_user.is_authenticated %}
+    <div class="hero-actions">
+        <a href="{{ url_for('register') }}" class="btn btn-primary">Get Started</a>
+        <a href="{{ url_for('login') }}" class="btn btn-secondary">Sign In</a>
+    </div>
+    {% endif %}
+</div>
+
+<div class="features">
+    <h2>Our Services</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>🏛️ Legal Advocacy</h3>
+            <p>Professional representation and advocacy for your legal matters.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📄 Document Assistance</h3>
+            <p>Help with filling out court forms and legal documents.</p>
+        </div>
+        <div class="feature-card">
+            <h3>👨‍👩‍👧‍👦 Family Law</h3>
+            <p>Support for family law matters including custody and support issues.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🏠 Housing Rights</h3>
+            <p>Assistance with eviction defense and housing disputes.</p>
+        </div>
+        <div class="feature-card">
+            <h3>💼 Employment Issues</h3>
+            <p>Help with workplace disputes and employment rights.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🤝 Free Consultation</h3>
+            <p>Free initial consultation for eligible low-income families.</p>
+        </div>
+    </div>
+</div>
+
+<div class="eligibility-info">
+    <h2>Who Qualifies?</h2>
+    <p>We provide free services to low-income families who meet our income guidelines. Create an account to check your eligibility.</p>
+    <a href="{{ url_for('register') }}" class="btn btn-primary">Check Eligibility</a>
+</div>
+{% endblock %}
