@@ -1,0 +1,243 @@
+# LLM Configuration for Soulshaker.io Security Expert Agent
+# This configuration defines the best LLMs to use for different security and development tasks
+
+version: "1.0"
+agent_id: "soulshaker-security-expert"
+grade: "A++"
+specialization: "anti-hacking-expert"
+
+# Primary LLM Stack
+primary_models:
+  - name: "gpt-4-turbo"
+    provider: "openai"
+    version: "gpt-4-turbo-2024-04-09"
+    use_cases:
+      - "security-analysis"
+      - "threat-modeling"
+      - "architecture-review"
+      - "incident-response"
+    max_tokens: 128000
+    temperature: 0.2  # Lower temperature for more deterministic security analysis
+    priority: 1
+
+  - name: "claude-3.5-sonnet"
+    provider: "anthropic"
+    version: "claude-3-5-sonnet-20241022"
+    use_cases:
+      - "code-security-review"
+      - "vulnerability-analysis"
+      - "secure-code-generation"
+      - "complex-reasoning"
+    max_tokens: 200000
+    temperature: 0.1
+    priority: 1
+
+  - name: "codellama-70b"
+    provider: "meta"
+    version: "codellama-70b-instruct"
+    use_cases:
+      - "code-vulnerability-detection"
+      - "security-pattern-matching"
+      - "code-analysis"
+    max_tokens: 16000
+    temperature: 0.0  # Zero temperature for consistent security checks
+    priority: 2
+
+# Specialized Security Models
+security_models:
+  - name: "gpt-4-vision"
+    provider: "openai"
+    version: "gpt-4-vision-preview"
+    use_cases:
+      - "architecture-diagram-analysis"
+      - "ui-security-review"
+      - "visual-security-audit"
+    max_tokens: 128000
+    temperature: 0.2
+    priority: 2
+
+  - name: "deepseek-coder"
+    provider: "deepseek"
+    version: "deepseek-coder-33b-instruct"
+    use_cases:
+      - "code-completion"
+      - "security-pattern-detection"
+    max_tokens: 16000
+    temperature: 0.0
+    priority: 3
+
+# Task Routing Configuration
+task_routing:
+  security_audit:
+    primary: "claude-3.5-sonnet"
+    fallback: "gpt-4-turbo"
+    parallel_validation: true
+    validation_model: "codellama-70b"
+  
+  vulnerability_detection:
+    primary: "codellama-70b"
+    secondary: "claude-3.5-sonnet"
+    confidence_threshold: 0.85
+  
+  secure_code_generation:
+    primary: "gpt-4-turbo"
+    secondary: "claude-3.5-sonnet"
+    verification_model: "codellama-70b"
+  
+  threat_modeling:
+    primary: "gpt-4-turbo"
+    fallback: "claude-3.5-sonnet"
+  
+  incident_response:
+    primary: "claude-3.5-sonnet"
+    response_time: "real-time"
+    priority: "critical"
+  
+  deployment_security:
+    primary: "gpt-4-turbo"
+    validation_model: "claude-3.5-sonnet"
+
+# Security-Specific Settings
+security_settings:
+  # Code scanning configuration
+  code_scanning:
+    enabled: true
+    scan_on_commit: true
+    scan_on_pr: true
+    block_on_high_severity: true
+    auto_fix_suggestions: true
+  
+  # Vulnerability databases
+  vulnerability_sources:
+    - "CVE"
+    - "CWE"
+    - "OWASP Top 10"
+    - "SANS Top 25"
+    - "Snyk Database"
+    - "GitHub Advisory Database"
+  
+  # Compliance frameworks
+  compliance_frameworks:
+    - "OWASP ASVS"
+    - "NIST"
+    - "SOC 2"
+    - "GDPR"
+    - "HIPAA"
+    - "PCI DSS"
+  
+  # Security testing
+  security_testing:
+    - "SAST"
+    - "DAST"
+    - "SCA"
+    - "Container Scanning"
+    - "Secret Detection"
+    - "License Compliance"
+
+# Model Performance Optimization
+optimization:
+  caching:
+    enabled: true
+    ttl: 3600  # Cache common security patterns for 1 hour
+  
+  rate_limiting:
+    requests_per_minute: 100
+    burst_limit: 20
+  
+  retry_strategy:
+    max_retries: 3
+    backoff_multiplier: 2
+    initial_delay_ms: 1000
+  
+  load_balancing:
+    strategy: "round-robin"
+    health_check_interval: 60
+
+# Integration Configuration
+integrations:
+  ci_cd:
+    - "github-actions"
+    - "gitlab-ci"
+    - "jenkins"
+    - "circleci"
+    - "azure-devops"
+  
+  security_tools:
+    - "snyk"
+    - "dependabot"
+    - "codeql"
+    - "semgrep"
+    - "trivy"
+    - "sonarqube"
+  
+  monitoring:
+    - "datadog"
+    - "new-relic"
+    - "splunk"
+    - "elastic-security"
+
+# Deployment Configuration
+deployment:
+  environments:
+    - "development"
+    - "staging"
+    - "production"
+  
+  security_gates:
+    development:
+      required_checks:
+        - "code-scan"
+        - "dependency-check"
+    
+    staging:
+      required_checks:
+        - "code-scan"
+        - "dependency-check"
+        - "security-audit"
+        - "penetration-test"
+    
+    production:
+      required_checks:
+        - "code-scan"
+        - "dependency-check"
+        - "security-audit"
+        - "penetration-test"
+        - "compliance-check"
+      approval_required: true
+      approvers:
+        - "security-team"
+        - "senior-engineer"
+
+# Logging and Monitoring
+logging:
+  level: "INFO"
+  security_events: "AUDIT"
+  retention_days: 90
+  pii_redaction: true
+  
+monitoring:
+  metrics:
+    - "security-scan-duration"
+    - "vulnerability-detection-rate"
+    - "false-positive-rate"
+    - "deployment-success-rate"
+  
+  alerts:
+    - type: "critical-vulnerability"
+      threshold: 1
+      notification: "immediate"
+    
+    - type: "high-severity-vulnerability"
+      threshold: 3
+      notification: "hourly"
+    
+    - type: "deployment-failure"
+      threshold: 1
+      notification: "immediate"
+
+# Model Update Strategy
+model_updates:
+  check_frequency: "daily"
+  auto_update: false  # Manual review required for security-critical updates
+  rollback_enabled: true
+  version_pinning: true  # Pin versions for consistency and security
