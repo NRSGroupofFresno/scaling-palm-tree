@@ -54,9 +54,11 @@ jobs:
           fi
 
       - name: Check for changes
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
-          git fetch origin ${{ github.base_ref }}
-          FILES_CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | wc -l)
+          git fetch origin "$BASE_REF"
+          FILES_CHANGED=$(git diff --name-only origin/"$BASE_REF"...HEAD | wc -l)
           if [ $FILES_CHANGED -eq 0 ]; then
             echo "Error: No files changed in this PR"
             exit 1
@@ -65,11 +67,16 @@ jobs:
 
       - name: Summary
         if: success()
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
         run: |
           echo "✓ All pull request checks passed!"
           echo ""
           echo "PR Details:"
-          echo "- Title: ${{ github.event.pull_request.title }}"
-          echo "- Author: ${{ github.event.pull_request.user.login }}"
-          echo "- Base: ${{ github.base_ref }}"
-          echo "- Head: ${{ github.head_ref }}"
+          echo "- Title: $PR_TITLE"
+          echo "- Author: $PR_AUTHOR"
+          echo "- Base: $BASE_REF"
+          echo "- Head: $HEAD_REF"
