@@ -19,8 +19,9 @@ jobs:
           fetch-depth: 0
 
       - name: Check PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          PR_TITLE="${{ github.event.pull_request.title }}"
           if [ "${#PR_TITLE}" -lt 10 ]; then
             echo "Error: PR title must be at least 10 characters long"
             exit 1
@@ -28,8 +29,9 @@ jobs:
           echo "✓ PR title is valid"
 
       - name: Check for description
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          PR_BODY="${{ github.event.pull_request.body }}"
           if [ -z "$PR_BODY" ] || [ "${#PR_BODY}" -lt 20 ]; then
             echo "Error: PR must have a description of at least 20 characters"
             exit 1
@@ -37,8 +39,9 @@ jobs:
           echo "✓ PR description is valid"
 
       - name: Validate branch name
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
         run: |
-          BRANCH_NAME="${{ github.head_ref }}"
           if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix|hotfix|docs|refactor|test|chore)/.+ ]]; then
             echo "Warning: Branch name should follow pattern: (feature|bugfix|hotfix|docs|refactor|test|chore)/<description>"
             echo "Current branch: $BRANCH_NAME"
