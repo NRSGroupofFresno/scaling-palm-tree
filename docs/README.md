@@ -6,9 +6,11 @@ Welcome to the scaling-palm-tree documentation. This directory contains comprehe
 
 ## Contents
 
-- [Architecture](./architecture.md) - System architecture and design decisions
-- [API Documentation](./api.md) - API reference and usage
-- [Development Guide](./development.md) - Guide for developers
+Documentation will be added as the project develops. Planned sections include:
+
+- Architecture - System architecture and design decisions
+- API Documentation - API reference and usage
+- Development Guide - Guide for developers
 
 ## Additional Resources
 
