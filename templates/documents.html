@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Documents - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="documents-page">
+    <h1>Document Templates</h1>
+    <p>Select a document template to generate a customized legal document for your case.</p>
+    
+    {% if categories %}
+        {% for category, templates in categories.items() %}
+        <div class="document-category">
+            <h2>{{ category }}</h2>
+            <div class="template-grid">
+                {% for template in templates %}
+                <div class="template-card">
+                    <h3>{{ template.name }}</h3>
+                    <p>{{ template.description }}</p>
+                    <a href="{{ url_for('generate_document', template_id=template.id) }}" class="btn btn-primary">Use Template</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No document templates available at this time.</p>
+    {% endif %}
+</div>
+{% endblock %}

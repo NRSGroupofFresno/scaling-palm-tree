@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Welcome, {{ current_user.first_name }}!</h1>
+    
+    {% if not current_user.is_eligible %}
+    <div class="alert alert-info">
+        <strong>Note:</strong> You haven't checked your eligibility yet. 
+        <a href="{{ url_for('eligibility') }}">Check if you qualify for free services</a>.
+    </div>
+    {% else %}
+    <div class="alert alert-success">
+        <strong>✓ Eligible:</strong> You qualify for our free legal services!
+    </div>
+    {% endif %}
+    
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <h2>Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="{{ url_for('new_case') }}" class="btn btn-primary">New Case</a>
+                <a href="{{ url_for('new_appointment') }}" class="btn btn-primary">Schedule Appointment</a>
+                <a href="{{ url_for('documents') }}" class="btn btn-secondary">Browse Documents</a>
+                <a href="{{ url_for('eligibility') }}" class="btn btn-secondary">Check Eligibility</a>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h2>My Cases ({{ cases|length }})</h2>
+            {% if cases %}
+                <ul class="case-list">
+                {% for case in cases[:5] %}
+                    <li>
+                        <a href="{{ url_for('view_case', case_id=case.id) }}">
+                            <strong>{{ case.case_number }}</strong> - {{ case.case_type }}
+                            <span class="status status-{{ case.status }}">{{ case.status }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+                {% if cases|length > 5 %}
+                    <a href="{{ url_for('cases') }}" class="btn btn-link">View all cases</a>
+                {% endif %}
+            {% else %}
+                <p>You don't have any cases yet. <a href="{{ url_for('new_case') }}">Create your first case</a>.</p>
+            {% endif %}
+        </div>
+        
+        <div class="dashboard-section">
+            <h2>Upcoming Appointments</h2>
+            {% if appointments %}
+                <ul class="appointment-list">
+                {% for appointment in appointments %}
+                    <li>
+                        <strong>{{ appointment.title }}</strong>
+                        <br>{{ appointment.appointment_date.strftime('%B %d, %Y at %I:%M %p') }}
+                        {% if appointment.location %}
+                        <br>📍 {{ appointment.location }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+                <a href="{{ url_for('appointments') }}" class="btn btn-link">View all appointments</a>
+            {% else %}
+                <p>No upcoming appointments. <a href="{{ url_for('new_appointment') }}">Schedule one now</a>.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

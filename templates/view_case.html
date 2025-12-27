@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Case {{ case.case_number }} - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="case-detail">
+    <div class="page-header">
+        <h1>{{ case.case_number }}</h1>
+        <div class="case-badges">
+            <span class="status status-{{ case.status }}">{{ case.status }}</span>
+            <span class="priority priority-{{ case.priority }}">{{ case.priority }}</span>
+        </div>
+    </div>
+    
+    <div class="case-info">
+        <h2>Case Information</h2>
+        <dl>
+            <dt>Case Type:</dt>
+            <dd>{{ case.case_type }}</dd>
+            
+            <dt>Description:</dt>
+            <dd>{{ case.description }}</dd>
+            
+            {% if case.court_name %}
+            <dt>Court Name:</dt>
+            <dd>{{ case.court_name }}</dd>
+            {% endif %}
+            
+            {% if case.filing_date %}
+            <dt>Filing Date:</dt>
+            <dd>{{ case.filing_date.strftime('%B %d, %Y') }}</dd>
+            {% endif %}
+            
+            {% if case.hearing_date %}
+            <dt>Hearing Date:</dt>
+            <dd>{{ case.hearing_date.strftime('%B %d, %Y') }}</dd>
+            {% endif %}
+            
+            <dt>Created:</dt>
+            <dd>{{ case.created_at.strftime('%B %d, %Y at %I:%M %p') }}</dd>
+            
+            <dt>Last Updated:</dt>
+            <dd>{{ case.updated_at.strftime('%B %d, %Y at %I:%M %p') }}</dd>
+        </dl>
+    </div>
+    
+    <div class="case-documents">
+        <h2>Documents ({{ case.documents|length }})</h2>
+        {% if case.documents %}
+            <ul class="document-list">
+            {% for document in case.documents %}
+                <li>
+                    <strong>{{ document.title }}</strong> - {{ document.document_type }}
+                    <br><small>Created: {{ document.created_at.strftime('%b %d, %Y') }}</small>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No documents yet.</p>
+        {% endif %}
+        <a href="{{ url_for('documents') }}" class="btn btn-primary">Add Document</a>
+    </div>
+    
+    <div class="case-notes">
+        <h2>Case Notes ({{ case.notes|length }})</h2>
+        {% if case.notes %}
+            <ul class="notes-list">
+            {% for note in case.notes %}
+                <li>
+                    <div class="note-content">{{ note.content }}</div>
+                    <small>{{ note.created_at.strftime('%b %d, %Y at %I:%M %p') }}
+                    {% if note.created_by %}by {{ note.created_by }}{% endif %}</small>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No notes yet.</p>
+        {% endif %}
+    </div>
+    
+    <div class="case-actions">
+        <a href="{{ url_for('cases') }}" class="btn btn-secondary">Back to Cases</a>
+    </div>
+</div>
+{% endblock %}

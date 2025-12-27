@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Appointments - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>My Appointments</h1>
+    <a href="{{ url_for('new_appointment') }}" class="btn btn-primary">Schedule Appointment</a>
+</div>
+
+{% if appointments %}
+    <div class="appointments-list">
+        {% for appointment in appointments %}
+        <div class="appointment-card">
+            <div class="appointment-header">
+                <h3>{{ appointment.title }}</h3>
+                <span class="status status-{{ appointment.status }}">{{ appointment.status }}</span>
+            </div>
+            <div class="appointment-details">
+                <p><strong>Date & Time:</strong> {{ appointment.appointment_date.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                <p><strong>Duration:</strong> {{ appointment.duration_minutes }} minutes</p>
+                {% if appointment.location %}
+                <p><strong>Location:</strong> {{ appointment.location }}</p>
+                {% endif %}
+                {% if appointment.description %}
+                <p><strong>Description:</strong> {{ appointment.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <p>You don't have any appointments scheduled.</p>
+        <a href="{{ url_for('new_appointment') }}" class="btn btn-primary">Schedule Your First Appointment</a>
+    </div>
+{% endif %}
+{% endblock %}

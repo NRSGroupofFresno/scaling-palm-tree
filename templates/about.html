@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <h1>About Us</h1>
+    
+    <section class="about-section">
+        <h2>Our Mission</h2>
+        <p>The Legal Advocacy Platform is committed to providing free legal assistance and authorized representative services to low-income families in need. We believe that everyone deserves access to justice, regardless of their financial situation.</p>
+    </section>
+    
+    <section class="about-section">
+        <h2>What We Do</h2>
+        <p>We provide comprehensive legal advocacy services including:</p>
+        <ul>
+            <li>Legal representation and advocacy</li>
+            <li>Self-help resources for court documents</li>
+            <li>Authorized representative services</li>
+            <li>Document preparation assistance</li>
+            <li>Legal consultation and guidance</li>
+            <li>Case management support</li>
+        </ul>
+    </section>
+    
+    <section class="about-section">
+        <h2>NRS Group of Fresno</h2>
+        <p>This platform is operated by NRS Group of Fresno, a trusted provider of legal advocacy services. We are the parent company of several community-focused initiatives dedicated to helping families navigate the legal system.</p>
+    </section>
+    
+    <section class="about-section">
+        <h2>Who We Serve</h2>
+        <p>We primarily serve low-income families who meet our income eligibility guidelines. Our services are completely free for qualifying individuals and families.</p>
+    </section>
+    
+    <section class="about-section">
+        <h2>Areas of Practice</h2>
+        <div class="practice-areas">
+            <div class="practice-area">
+                <h3>Family Law</h3>
+                <p>Divorce, custody, child support, and domestic relations matters</p>
+            </div>
+            <div class="practice-area">
+                <h3>Housing</h3>
+                <p>Eviction defense, landlord-tenant disputes, and housing rights</p>
+            </div>
+            <div class="practice-area">
+                <h3>Immigration</h3>
+                <p>Immigration applications, naturalization, and asylum cases</p>
+            </div>
+            <div class="practice-area">
+                <h3>Employment</h3>
+                <p>Wage disputes, workplace discrimination, and employment rights</p>
+            </div>
+            <div class="practice-area">
+                <h3>Consumer Rights</h3>
+                <p>Consumer protection, debt defense, and credit issues</p>
+            </div>
+            <div class="practice-area">
+                <h3>Small Claims</h3>
+                <p>Small claims court assistance and representation</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about-section">
+        <h2>Get Started</h2>
+        <p>If you need legal assistance, <a href="{{ url_for('register') }}">create an account</a> to check your eligibility and access our services.</p>
+    </section>
+</div>
+{% endblock %}

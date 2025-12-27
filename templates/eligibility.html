@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Check Eligibility - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Income Eligibility Check</h2>
+    <p>Please provide your household income information to determine if you qualify for free legal services.</p>
+    
+    <div class="info-box">
+        <h3>Income Guidelines</h3>
+        <p>You may qualify for free services if your annual household income is:</p>
+        <ul>
+            <li>1 person: $30,000 or less</li>
+            <li>2 people: $40,000 or less</li>
+            <li>3 people: $50,000 or less</li>
+            <li>4 people: $60,000 or less</li>
+            <li>5+ people: Add $10,000 per additional person</li>
+        </ul>
+    </div>
+    
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.annual_income.label }}
+            {{ form.annual_income(class="form-control") }}
+            {% if form.annual_income.errors %}
+                <span class="error">{{ form.annual_income.errors[0] }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.household_size.label }}
+            {{ form.household_size(class="form-control") }}
+            {% if form.household_size.errors %}
+                <span class="error">{{ form.household_size.errors[0] }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

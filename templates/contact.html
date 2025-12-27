@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Legal Advocacy Platform{% endblock %}
+
+{% block content %}
+<div class="contact-page">
+    <h1>Contact Us</h1>
+    
+    <section class="contact-info">
+        <h2>Get in Touch</h2>
+        <p>We're here to help! If you have questions about our services or need assistance, please don't hesitate to reach out.</p>
+        
+        <div class="contact-methods">
+            <div class="contact-method">
+                <h3>📧 Email</h3>
+                <p><a href="mailto:info@nrsgroup.org">info@nrsgroup.org</a></p>
+            </div>
+            
+            <div class="contact-method">
+                <h3>📞 Phone</h3>
+                <p>(559) 555-0100</p>
+                <p><small>Monday - Friday, 9:00 AM - 5:00 PM PST</small></p>
+            </div>
+            
+            <div class="contact-method">
+                <h3>📍 Office Location</h3>
+                <p>NRS Group of Fresno<br>
+                123 Main Street<br>
+                Fresno, CA 93721</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="office-hours">
+        <h2>Office Hours</h2>
+        <table>
+            <tr>
+                <td>Monday - Thursday</td>
+                <td>9:00 AM - 5:00 PM</td>
+            </tr>
+            <tr>
+                <td>Friday</td>
+                <td>9:00 AM - 4:00 PM</td>
+            </tr>
+            <tr>
+                <td>Saturday - Sunday</td>
+                <td>Closed</td>
+            </tr>
+        </table>
+    </section>
+    
+    <section class="emergency-info">
+        <h2>Emergency Assistance</h2>
+        <p>If you need immediate legal assistance, please call our emergency hotline at <strong>(559) 555-9999</strong>.</p>
+        <p>For life-threatening emergencies, always call 911.</p>
+    </section>
+    
+    <section class="faq-preview">
+        <h2>Quick Questions?</h2>
+        <p>Before contacting us, you might find the answer to your question in our service information:</p>
+        <ul>
+            <li><a href="{{ url_for('about') }}">Learn about our services</a></li>
+            <li><a href="{{ url_for('eligibility') if current_user.is_authenticated else url_for('register') }}">Check eligibility requirements</a></li>
+            <li><a href="{{ url_for('documents') if current_user.is_authenticated else url_for('register') }}">Browse document templates</a></li>
+        </ul>
+    </section>
+</div>
+{% endblock %}
