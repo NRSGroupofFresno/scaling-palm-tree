@@ -1,0 +1,82 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-checks:
+    name: Pull Request Validation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [ "${#PR_TITLE}" -lt 10 ]; then
+            echo "Error: PR title must be at least 10 characters long"
+            exit 1
+          fi
+          echo "✓ PR title is valid"
+
+      - name: Check for description
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          if [ -z "$PR_BODY" ] || [ "${#PR_BODY}" -lt 20 ]; then
+            echo "Error: PR must have a description of at least 20 characters"
+            exit 1
+          fi
+          echo "✓ PR description is valid"
+
+      - name: Validate branch name
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix|hotfix|docs|refactor|test|chore)/.+ ]]; then
+            echo "Warning: Branch name should follow pattern: (feature|bugfix|hotfix|docs|refactor|test|chore)/<description>"
+            echo "Current branch: $BRANCH_NAME"
+            # Not failing, just warning
+          else
+            echo "✓ Branch name follows convention"
+          fi
+
+      - name: Check for changes
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch origin "$BASE_REF"
+          FILES_CHANGED=$(git diff --name-only origin/"$BASE_REF"...HEAD | wc -l)
+          if [ $FILES_CHANGED -eq 0 ]; then
+            echo "Error: No files changed in this PR"
+            exit 1
+          fi
+          echo "✓ PR contains $FILES_CHANGED file(s) changed"
+
+      - name: Summary
+        if: success()
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          echo "✓ All pull request checks passed!"
+          echo ""
+          echo "PR Details:"
+          echo "- Title: $PR_TITLE"
+          echo "- Author: $PR_AUTHOR"
+          echo "- Base: $BASE_REF"
+          echo "- Head: $HEAD_REF"
